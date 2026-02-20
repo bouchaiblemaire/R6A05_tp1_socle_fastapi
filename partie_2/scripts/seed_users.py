@@ -5,14 +5,13 @@ from pathlib import Path
 
 from sqlalchemy import text
 
-from app.core.settings import Settings
+from app.core.settings import get_settings
 from app.db.engine import get_engine
 from app.db.base import Base
-from app.models_orm.user_table import UserTable
-
+from app.models_orm.user_table import UserTable # Important pour que create_all() puisse mapper UserTable
 
 def main() -> None:
-    settings = Settings()
+    settings = get_settings()
 
     engine = get_engine()
     Base.metadata.create_all(bind=engine)
@@ -31,3 +30,7 @@ def main() -> None:
             inserted += 1
 
     print(f"Inserted: {inserted}")
+
+
+if __name__ == "__main__":
+    main()
